@@ -21,7 +21,7 @@ var cursos = [{
 var lista = document.getElementById("curso");
 
 function limparLista() {
-    if (lista.firstChild != null) {
+    if (lista) {
         while (lista.firstChild) {
             lista.removeChild(lista.firstChild);
         }
@@ -29,62 +29,99 @@ function limparLista() {
 }
 
 function exibirCursos() {
-    limparLista();
+    if (lista) {
+        limparLista();
 
-    for (var i = 0; i < cursos.length; i++) {
-        var option = document.createElement("option");
-        option.textContent = cursos[i].titulo;
-        option.setAttribute("value", cursos[i].id);
-        lista.appendChild(option);
+        for (var i = 0; i < cursos.length; i++) {
+            var option = document.createElement("option");
+            option.textContent = cursos[i].titulo;
+            option.setAttribute("value", cursos[i].id);
+            lista.appendChild(option);
+        }
     }
 }
 
 exibirCursos();
 
 var salvar = document.getElementById('salvar');
-salvar.addEventListener('click', function() {
-    var nome = document.getElementById('nome').value;
-    var email = document.getElementById('email').value;
-    var curso = document.getElementById('curso').value;
+var db;
 
-    var request = window.indexedDB.open("cursos", 1);
+var request = window.indexedDB.open("cursos", 2);
 
-    request.onerror = function(event) {
-        alert("Why didn't you allow my web app to use IndexedDB?!");
-    };
-    request.onsuccess = function(event) {
-        db = event.target.result;
-    };
+request.onerror = function(event) {
+    alert("Why didn't you allow my web app to use IndexedDB?!");
+};
 
-    request.onupgradeneeded = function(event) {
-        var db = event.target.result;
+request.onsuccess = function(event) {
+    db = event.target.result;
+    console.log('onsucess');
 
-         // Create an objectStore to hold information about our customers. We're
-        // going to use "ssn" as our key path because it's guaranteed to be
-        // unique - or at least that's what I was told during the kickoff meeting.
-        var objectStore = db.createObjectStore("customers", { keyPath: "ssn" });
+    getAll();
+};
 
-        // Create an index to search customers by name. We may have duplicates
-        // so we can't use a unique index.
-        objectStore.createIndex("name", "name", { unique: false });
+request.onupgradeneeded = function(event) {
+    var db = event.target.result;
 
-        // Create an index to search customers by email. We want to ensure that
-        // no two customers have the same email, so use a unique index.
-        objectStore.createIndex("email", "email", { unique: true });
+    db.createObjectStore('cursos', { keyPath: 'id', autoIncrement: true});
 
-        // Use transaction oncomplete to make sure the objectStore creation is 
-        // finished before adding data into it.
-        objectStore.transaction.oncomplete = function(event) {
-            // Store values in the newly created objectStore.
-            var customerObjectStore = db.transaction("customers", "readwrite").objectStore("customers");
-            for (var i in customerData) {
-            customerObjectStore.add(customerData[i]);
-            }
-        };
-    };
+    console.log('onupgradeneeded');
+};
+
+if (salvar) {
+    salvar.addEventListener('click', function() {
+        var nome = document.getElementById('nome').value;
+        var email = document.getElementById('email').value;
+        var curso = document.getElementById('curso').value;
     
-});
+        var transaction = db.transaction(["cursos"], "readwrite");
+        var store = transaction.objectStore("cursos");
+    
+        var request = store.add({
+            nome: nome,
+            email: email,
+            curso: curso,
+        });
+    
+        request.onerror = function(e) {
+            console.log("Error", e.target.error.name);
+        }
+    
+        request.onsuccess = function(e) {
+            alert('Obrigado pelo interesse!');
 
-function store(db) {
+            document.getElementById('nome').value = '';
+            document.getElementById('email').value = '';
+            document.getElementById('curso').value = '';
+        }
+    }, false);
+}
 
+function getAll() {
+    var tabela = document.getElementById('tabela');
+
+    if (tabela) {
+        var transaction = db.transaction(['cursos'], 'readonly');
+        var obj = transaction.objectStore('cursos');
+
+        var cursor = obj.openCursor();
+        cursor.onsuccess = function(event) {
+            var result = event.target.result;
+            var html = '';
+            
+            if (result) {
+                console.log(result)
+
+                html += '<tr>' +
+                            '<th scope="row">' + result.primaryKey + '</th>' +
+                            '<td>' + result.value.nome + '</td>' +
+                            '<td>' + result.value.email + '</td>' + 
+                            '<td>' + result.value.curso + '</td>' +
+                        '</tr>';
+
+                result.continue();
+            }
+            
+            tabela.innerHTML += html;
+        }
+    }
 }
