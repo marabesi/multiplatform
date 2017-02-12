@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Cadastro de Cursos - Login</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+</head>
+
+<body>
+    <header>
+        <p>Bem-vindo,
+            <%- usuario.nome %>
+        </p>
+        <h1>Lista de Cursos</h1>
+    </header>
+    <section>
+        <ul>
+            <% for(var i=0; i<cursos.length; i++) {%>
+                <li>
+                    
+                    <span class="codigo"><%= cursos[i].codigo %></span>
+                    <h3><%= cursos[i].descricao %></h3>
+                    <small><%= cursos[i].ch %></small>
+                    <p>
+                        
+                    </p>
+                </li>
+            <% } %>
+        </ul>
+    </section>
+    <footer>
+        <small>Sistema de Cadastro de Cursos e Convidados</small>
+    </footer>
+</body>
+
+</html>
