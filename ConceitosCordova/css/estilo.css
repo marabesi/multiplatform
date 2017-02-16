@@ -1,0 +1,7 @@
+.imagem {
+    width: 100%;
+}
+
+#opcao1:checked ~ #imagem2, #opcao2:checked ~ #imagem1 {
+    display: none;
+}
