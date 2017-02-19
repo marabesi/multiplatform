@@ -19,13 +19,12 @@ module.exports = function (app) {
         cadastroCurso: function (req, res) {
             var usuario = req.session.usuario,
                 params = { usuario: usuario };
-
+            // app.models.Categoria.find().remove();
             app.models.Categoria.find((error, categorias) => {
                 var params = {
                     usuario: usuario,
                     categorias: categorias
                 };
-                console.log(categorias);
                 res.render('cursos/cadCursos', params);
             })
 
@@ -40,7 +39,7 @@ module.exports = function (app) {
                 };
                 console.log(cursos);
                 res.render('cursos/listaCursos', params);
-            });
+            }).populate('categoria');
             
 
             // mongoose.connect('mongodb://localhost/fiap');
@@ -50,14 +49,14 @@ module.exports = function (app) {
         },
         novoCurso: function (request, response) {
 
-            var curso = new Curso(request.body.curso);
+            var curso = new app.models.Curso(request.body.curso);
             curso.save(err => {
                 if (err) {
                     console.log(err);
                 }
                 else {
                     console.log("Cadastrado!");
-                    response.redirect('/menu');
+                    response.redirect('/listaCursos');
                 }
             });
             // var descricao = request.body.evento.descricao;

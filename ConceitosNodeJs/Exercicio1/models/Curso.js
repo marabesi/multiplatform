@@ -6,6 +6,6 @@ module.exports = function (app) {
         codigo: String,
         descricao: String,
         CH: String,
-        _categoria: { type: String, ref: "Categoria" }
+        categoria: { type: Schema.Types.ObjectId, ref: "Categoria" }
     }));
 }

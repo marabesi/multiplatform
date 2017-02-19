@@ -16,7 +16,7 @@
         <h4>Forneça os dados para o cadastro</h4>
     </header>
     <section>
-        <form action="/novoEvento" method="post">
+        <form action="/cadCurso" method="post">
             Código:
             <br /><input type="text" name="curso[codigo]">
             <br> Descricao:
@@ -26,7 +26,7 @@
             <br>
             <br> Categoria:
             <br />
-            <select type="text" name="curso[categoria_id]">
+            <select type="text" name="curso[categoria]">
                 <% for(var i=0; i<categorias.length; i++) {%>
                     <option value="<%= categorias[i].id %>"><%= categorias[i].descricao %></option>
                 <% } %>
