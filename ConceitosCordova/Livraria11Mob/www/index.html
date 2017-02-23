@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <title>Livraria da turma MOB - Fiap</title>
+    <link rel="stylesheet" href="icons/material.css">
+    <link rel="stylesheet" href="css/materialize.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="topo-fixo">
+        <div class="teal darken-4 white-text valign-wrapper">
+            <h5 class="titulo">Livraria da MOB</h5>
+            <div>
+                <i data-activates="submenu"
+                 data-gutter="5"
+                data-contrainwidth="false"
+                class="material-icons waves-effect waves-light waves-circle dropdown-button">more_vert</i>
+            </div> 
+            <ul class="dropdown-content" id="submenu">
+                <li><a class="black-text acao-limpar" href="">Limpar</a></li>
+            </ul> 
+        </div> 
+    
+        <ul class="tabs teal darken-4">
+            <li class="tab"><a href="#livros" class="waves-effect waves-light white-text">Livros</a></li>
+            <li class="tab"><a href="#revistas" class="waves-effect waves-light white-text">Revistas</a></li>
+            <li class="tab"><a href="#materiais" class="waves-effect waves-light white-text">Materiais</a></li>
+        </ul>
+    </div>
+    <div class="section" id="livros">
+        <h6 class="container">Informática</h6> 
+        <div class="collection">
+            <a class="collection-item waves-effect">Java Web Service</a>
+            <a class="collection-item waves-effect">JQuery Mobile</a>
+            <a class="collection-item waves-effect">Desenvolvendo com Angular 2</a>
+        </div>
+        <h6 class="container">Romance</h6>
+        <div class="collection">
+            <a class="collection-item">O tempo e o Vento</a>
+            <a class="collection-item">A Cabana</a>
+        </div> 
+    </div>
+
+    <div class="section" id="revistas">
+        <h6 class="container">Informática</h6> 
+        <div class="collection">
+            <a class="collection-item">Java Magazine</a>
+            <a class="collection-item">Exame Informática</a>
+            <a class="collection-item">Engenharia Civil</a>
+        </div> 
+
+        <h6 class="container">Informação</h6> 
+        <div class="collection">
+            <a class="collection-item">Veja São Paulo</a>
+            <a class="collection-item">Caras</a>
+            <a class="collection-item">Contigo!</a>
+        </div>
+    </div>
+
+    <div class="section" id="materiais">
+        <h6 class="container">Escolar</h6> 
+        <div class="collection">
+            <a class="collection-item">Caderno Brochura</a>
+            <a class="collection-item">Régua 30 cm</a>
+            <a class="collection-item">Borracha</a>
+            <a class="collection-item">Mochila</a>
+            <a class="collection-item">Estojo</a>
+        </div> 
+    </div> 
+
+    <div class="fixed-action-btn">
+        <a href="#confirmacao" class="btn-floating btn-large waves-effect waves-light blue modal-trigger">
+            <i class="material-icons">done</i>
+        </a>
+    </div> 
+
+    <div class="modal modal-fixed-footer" id="confirmacao">
+        <div class="modal-content">
+            <h5>Resumo dos itens selecionados</h5>
+            <input type="number" class="validate" placeholder="Número do vendedor" id="numero-vendedor">
+            <blockquote id="resumo"></blockquote>
+        </div>
+        <div class="modal-footer">
+            <button class="btn deep-orange waves-effect waves-light modal-close acao-finalizar">
+                Concluir
+            </button>
+            <button class="btn-flat waves-effect waves-red modal-close acao-limpar">
+                Cancelar
+            </button>
+        </div>
+    </div> 
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/materialize.min.js"></script>
+    <script src="js/livraria.js"></script>
+</body>
+</html>
