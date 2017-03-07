@@ -1,0 +1,15 @@
+<section>
+    <article>
+        <h3>Evento</h3>
+
+        <button (click)="onClick()">Exibir mensagem</button>
+
+        <input type="text" (keyup)="onKeyUp($event)" (blur)="onSave(campo.value)" #campo/>
+        <div>
+            {{ texto }}
+        </div>
+        <div>
+            {{ armazenado }}
+        </div>
+    </article>
+</section>
